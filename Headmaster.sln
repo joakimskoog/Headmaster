@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headmaster.Core", "Headmast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headmaster.Core.Tests", "Headmaster.Core.Tests\Headmaster.Core.Tests.csproj", "{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headmaster", "Headmaster\Headmaster.csproj", "{E095868F-7474-466B-A1DE-C6F2406E912A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E095868F-7474-466B-A1DE-C6F2406E912A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E095868F-7474-466B-A1DE-C6F2406E912A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E095868F-7474-466B-A1DE-C6F2406E912A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E095868F-7474-466B-A1DE-C6F2406E912A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
