@@ -1,4 +1,0 @@
-language: csharp
-solution: Headmaster.sln
-mono:
-  - latest
