@@ -5,6 +5,11 @@ namespace Headmaster.Core
 {
     public static class TypeExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string GetControllerSupportedVersion(this Type type)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
@@ -16,6 +21,12 @@ namespace Headmaster.Core
             return innermostNamespace ?? string.Empty;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
         public static bool HasControllerSupportForVersion(this Type type, string version)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
