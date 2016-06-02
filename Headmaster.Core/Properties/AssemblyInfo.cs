@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Headmaster.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Headmaster.Core contains core logic for handling API versions in requests and namespaces.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Joakim Skoog")]
 [assembly: AssemblyProduct("Headmaster.Core")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © Joakim Skoog 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

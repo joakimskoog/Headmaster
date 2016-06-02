@@ -15,4 +15,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>WebAPI, Versioning, Header</tags>
   </metadata>
+  <files>
+    <file src="Resources\**\*.*" target="content" />
+  </files>
 </package>
