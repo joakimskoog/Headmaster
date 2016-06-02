@@ -11,7 +11,7 @@
     <iconUrl>https://github.com/joakimskoog/Headmaster</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>Changed name in on all methods in TypeExtensions</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>WebAPI, Versioning, Header</tags>
   </metadata>

@@ -9,7 +9,7 @@ namespace Headmaster.Core
         {
             if (controller == null) throw new ArgumentNullException(nameof(controller));
 
-            return controller.ControllerType.GetControllerSupportedVersion();
+            return controller.ControllerType.GetInnermostNamespaceName();
         }
 
         public static bool HasSupportForVersion(this HttpControllerDescriptor controller, string version)
@@ -17,7 +17,7 @@ namespace Headmaster.Core
             if (controller == null) throw new ArgumentNullException(nameof(controller));
             if (string.IsNullOrEmpty(version)) throw new ArgumentNullException(nameof(version));
 
-            return controller.ControllerType.HasControllerSupportForVersion(version);
+            return controller.ControllerType.IsInnermostNamespaceName(version);
         }
     }
 }

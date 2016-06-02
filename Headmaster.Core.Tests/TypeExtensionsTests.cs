@@ -12,20 +12,11 @@ namespace Headmaster.Core.Tests
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void GivenThatTypeIsNull_WhenGetControllerSupportedVersionIsCalled_ThenArgumentNullExceptionIsThrown()
+        public void GivenThatTypeIsNull_WhenGetInnermostNamespaceNameIsCalled_ThenArgumentNullExceptionIsThrown()
         {
             Type t = null;
 
-            var supportedVersion = t.GetControllerSupportedVersion();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void GivenThatTypeIsNotApiController_WhenGetControllerSupportedVersionIsCalled_ThenArgumentExceptionIsThrown()
-        {
-            Type t = typeof(string);
-
-            var supportedVersion = t.GetControllerSupportedVersion();
+            var supportedVersion = t.GetInnermostNamespaceName();
         }
 
         [TestMethod]
@@ -33,7 +24,7 @@ namespace Headmaster.Core.Tests
         {
             var type = typeof(TestApiController);
 
-            var suppportedVersion = type.GetControllerSupportedVersion();
+            var suppportedVersion = type.GetInnermostNamespaceName();
 
             Assert.AreEqual("v0", suppportedVersion);
         }
@@ -43,7 +34,7 @@ namespace Headmaster.Core.Tests
         {
             var type = typeof(InnerTestApiController);
 
-            var supportedVersion = type.GetControllerSupportedVersion();
+            var supportedVersion = type.GetInnermostNamespaceName();
 
             Assert.AreEqual("v1", supportedVersion);
         }
@@ -53,7 +44,7 @@ namespace Headmaster.Core.Tests
         {
             var type = typeof(TestApiController);
 
-            var isSupported = type.HasControllerSupportForVersion("v1");
+            var isSupported = type.IsInnermostNamespaceName("v1");
 
             Assert.IsFalse(isSupported);
         }
@@ -63,7 +54,7 @@ namespace Headmaster.Core.Tests
         {
             var type = typeof(InnerTestApiController);
 
-            var isSupported = type.HasControllerSupportForVersion("v0");
+            var isSupported = type.IsInnermostNamespaceName("v0");
 
             Assert.IsFalse(isSupported);
         }
@@ -73,7 +64,7 @@ namespace Headmaster.Core.Tests
         {
             var type = typeof(TestApiController);
 
-            var isSupported = type.HasControllerSupportForVersion("v0");
+            var isSupported = type.IsInnermostNamespaceName("v0");
 
             Assert.IsTrue(isSupported);
         }
@@ -83,7 +74,7 @@ namespace Headmaster.Core.Tests
         {
             var type = typeof(InnerTestApiController);
 
-            var isSupported = type.HasControllerSupportForVersion("v1");
+            var isSupported = type.IsInnermostNamespaceName("v1");
 
             Assert.IsTrue(isSupported);
         }
@@ -94,7 +85,7 @@ namespace Headmaster.Core.Tests
         {
             Type t = null;
 
-            var isSupported = t.HasControllerSupportForVersion("v1");
+            var isSupported = t.IsInnermostNamespaceName("v1");
         }
 
         [TestMethod]
@@ -103,7 +94,7 @@ namespace Headmaster.Core.Tests
         {
             Type t = typeof(TestApiController);
 
-            var isSupported = t.HasControllerSupportForVersion(null);
+            var isSupported = t.IsInnermostNamespaceName(null);
         }
     }
 }
