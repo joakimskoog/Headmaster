@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headmaster.Core", "Headmaster.Core\Headmaster.Core.csproj", "{B228B73E-F8F6-43D4-868C-01D92DD3D788}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headmaster.Core.Tests", "Headmaster.Core.Tests\Headmaster.Core.Tests.csproj", "{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B228B73E-F8F6-43D4-868C-01D92DD3D788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B228B73E-F8F6-43D4-868C-01D92DD3D788}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B228B73E-F8F6-43D4-868C-01D92DD3D788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32999ED-D0BF-4EAE-A902-36B1160D8BB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
