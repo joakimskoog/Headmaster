@@ -40,9 +40,15 @@ namespace Headmaster
             }
 
             var version = request.GetApiVersion(_options.MediaType, _options.MediaTypeParameter);
-            if (string.IsNullOrEmpty(version))
+            if (string.IsNullOrEmpty(version) && _options.DefaultVersionResolving == DefaultVersionResolving.ThrowErrorIfEmpty)
             {
                 throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "No API version was found"));
+            }
+
+            //We don't want to prepend our value to the version if it's empty, because that would mess with other checks
+            if (!string.IsNullOrEmpty(version))
+            {
+                version = $"{_options.RequestVersionPrepend}{version}";
             }
 
             var subRoutes = routeData.GetSubRoutes();
@@ -66,8 +72,17 @@ namespace Headmaster
                 var filteredSubRoutes = subRoutes.Where(routeAttributeData =>
                 {
                     var currentDescriptor = GetControllerDescriptor(routeAttributeData);
-                    bool hasSupportForVersion = currentDescriptor.HasSupportForVersion(version);
 
+                    if (string.IsNullOrEmpty(version))
+                    {
+                        string latestVersion = "";
+                        if (_controllerDescriptorCache.TryGetLatestVersion(currentDescriptor.ControllerName, out latestVersion))
+                        {
+                            version = latestVersion;
+                        }
+                    }
+
+                    bool hasSupportForVersion = currentDescriptor.HasSupportForVersion(version);
                     if (hasSupportForVersion && controllerDescriptor == null)
                     {
                         controllerDescriptor = currentDescriptor;

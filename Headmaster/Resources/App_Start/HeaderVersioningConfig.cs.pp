@@ -11,7 +11,7 @@ namespace $rootnamespace$
     {
 		public static void Register() 
 		{
-			GlobalConfiguration.Configuration.EnableHeaderVersioning(new HeaderVersioningOptions("mediaTypeHere", "mediaTypeParameterHere"));
+			GlobalConfiguration.Configuration.EnableHeaderVersioning(new HeaderVersioningOptions("mediaTypeHere", "mediaTypeParameterHere", DefaultVersionResolving.UseLatestIfEmpty));
 		}
     }
 }

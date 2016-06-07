@@ -65,9 +65,14 @@ namespace Headmaster
 
         public bool TryGet(string controllerName, string version, out HttpControllerDescriptor controllerDescriptor)
         {
-            if (TryGetControllerDescriptor(controllerName, version, out controllerDescriptor))
+            if (!string.IsNullOrEmpty(version))
             {
-                return true;
+                if (TryGetControllerDescriptor(controllerName, version, out controllerDescriptor))
+                {
+                    return true;
+                }
+
+                return false;
             }
 
             string latestVersion = "";
@@ -79,10 +84,11 @@ namespace Headmaster
                 }
             }
 
+            controllerDescriptor = null;
             return false;
         }
 
-        private bool TryGetControllerDescriptor(string controllerName, string version, out HttpControllerDescriptor controllerDescriptor)
+        public bool TryGetControllerDescriptor(string controllerName, string version, out HttpControllerDescriptor controllerDescriptor)
         {
             var key = CreateControllerIdentifierKey(controllerName, version);
             if (ControllerDescriptors.TryGetValue(key, out controllerDescriptor))
@@ -93,7 +99,7 @@ namespace Headmaster
             return false;
         }
 
-        private bool TryGetLatestVersion(string controllerName, out string latestVersion)
+        public bool TryGetLatestVersion(string controllerName, out string latestVersion)
         {
             var cleanedControllerName = GetControllerNameWithoutControllerSuffix(controllerName).ToLower(CultureInfo.InvariantCulture);
 
