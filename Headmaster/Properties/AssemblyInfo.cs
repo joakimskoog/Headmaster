@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Headmaster")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Headmaster is a small library for versioning your Web API 2 controllers via the Accept header and namespaces ")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Joakim Skoog")]
 [assembly: AssemblyProduct("Headmaster")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]

@@ -61,6 +61,7 @@
     <Compile Include="Configuration\HeaderVersioningOptions.cs" />
     <Compile Include="Configuration\HttpConfigurationExtensions.cs" />
     <Compile Include="HttpControllerDescriptorCache.cs" />
+    <Compile Include="HttpControllerTypeResolver.cs" />
     <Compile Include="IControllerTypesResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
