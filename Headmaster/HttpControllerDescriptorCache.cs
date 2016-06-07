@@ -60,6 +60,17 @@ namespace Headmaster
             return dictionary;
         }
 
+        public bool TryGet(string controllerName, string version, out HttpControllerDescriptor controllerDescriptor)
+        {
+            var key = CreateControllerIdentifierKey(controllerName, version);
+            if (ControllerDescriptors.TryGetValue(key, out controllerDescriptor))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private string GetControllerNameWithoutControllerSuffix(string controllerName)
         {
             if (controllerName.EndsWith("Controller", true, CultureInfo.InvariantCulture))

@@ -14,7 +14,9 @@ namespace Headmaster
 {
     public class AcceptHeaderControllerSelector : IHttpControllerSelector
     {
+        private const string ControllerKey = "controller";
         private const string ActionKey = "actions";
+        private const string SubRoutesKey = "MS_SubRoutes";
 
         private readonly HttpControllerDescriptorCache _controllerDescriptorCache;
         private readonly HeaderVersioningOptions _options;
@@ -39,6 +41,29 @@ namespace Headmaster
             if (string.IsNullOrEmpty(version))
             {
                 throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "No API version was found"));
+            }
+
+            var subRoutes = routeData.GetSubRoutes();
+
+            if (subRoutes == null)
+            {
+                string controllerName = GetRouteVariable<string>(routeData, ControllerKey);
+                if (controllerName == null)
+                {
+                    throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "Failed to find controller name"));
+                }
+
+                HttpControllerDescriptor controllerDescriptor;
+                if (_controllerDescriptorCache.TryGet(controllerName, version, out controllerDescriptor))
+                {
+                    return controllerDescriptor;
+                }
+            }
+            else
+            {
+                //We're using attribute routing
+
+
             }
 
             throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "Failed to find a controller that matches the request"));
