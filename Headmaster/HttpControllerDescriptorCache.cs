@@ -17,6 +17,7 @@ namespace Headmaster
         private readonly Lazy<IDictionary<string, HttpControllerDescriptor>> _controllers;
 
         public IDictionary<string, HttpControllerDescriptor> ControllerDescriptors => _controllers.Value;
+        private readonly IDictionary<string, string> _defaultControllerVersions = new Dictionary<string, string>();
 
         public HttpControllerDescriptorCache(HttpConfiguration configuration, IControllerTypesResolver controllerTypesResolver)
         {
@@ -41,7 +42,9 @@ namespace Headmaster
                 //the controller supports.
                 var controllerSupportedVersion = controllerType.GetInnermostNamespaceName();
 
-                //todo: Add support for calculating the latest version of a controller
+                //Calculate the highest available version for each controller, this will be used as the default version
+                var latestVersionForController = CalculateHighestVersion(controllerName, controllerSupportedVersion);
+                _defaultControllerVersions[controllerName.ToLower()] = latestVersionForController;
 
                 // Create a lookup table where the key is "namespace.controller". 
                 //This is to enable controllers with the same name but in different namespaces
@@ -62,12 +65,44 @@ namespace Headmaster
 
         public bool TryGet(string controllerName, string version, out HttpControllerDescriptor controllerDescriptor)
         {
+            if (TryGetControllerDescriptor(controllerName, version, out controllerDescriptor))
+            {
+                return true;
+            }
+
+            string latestVersion = "";
+            if (TryGetLatestVersion(controllerName, out latestVersion))
+            {
+                if (TryGetControllerDescriptor(controllerName, latestVersion, out controllerDescriptor))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryGetControllerDescriptor(string controllerName, string version, out HttpControllerDescriptor controllerDescriptor)
+        {
             var key = CreateControllerIdentifierKey(controllerName, version);
             if (ControllerDescriptors.TryGetValue(key, out controllerDescriptor))
             {
                 return true;
             }
 
+            return false;
+        }
+
+        private bool TryGetLatestVersion(string controllerName, out string latestVersion)
+        {
+            var cleanedControllerName = GetControllerNameWithoutControllerSuffix(controllerName).ToLower(CultureInfo.InvariantCulture);
+
+            if (_defaultControllerVersions.TryGetValue(cleanedControllerName, out latestVersion))
+            {
+                return true;
+            }
+
+            latestVersion = string.Empty;
             return false;
         }
 
@@ -85,6 +120,21 @@ namespace Headmaster
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", supportedVersion, controllerName);
         }
-    }
 
+        private string CalculateHighestVersion(string controllerName, string version)
+        {
+            string defaultVersion = null;
+            if (_defaultControllerVersions.TryGetValue(controllerName.ToLower(CultureInfo.InvariantCulture), out defaultVersion))
+            {
+                var result = string.Compare(version, defaultVersion, StringComparison.OrdinalIgnoreCase);
+
+                if (result <= 0)
+                {
+                    return defaultVersion;
+                }
+            }
+
+            return version;
+        }
+    }
 }
