@@ -31,6 +31,8 @@ namespace Headmaster
 
         public HttpControllerDescriptor SelectController(HttpRequestMessage request)
         {
+            HttpControllerDescriptor controllerDescriptor = null;
+
             IHttpRouteData routeData = request.GetRouteData();
             if (routeData == null)
             {
@@ -53,7 +55,6 @@ namespace Headmaster
                     throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "Failed to find controller name"));
                 }
 
-                HttpControllerDescriptor controllerDescriptor;
                 if (_controllerDescriptorCache.TryGet(controllerName, version, out controllerDescriptor))
                 {
                     return controllerDescriptor;
@@ -62,8 +63,21 @@ namespace Headmaster
             else
             {
                 //We're using attribute routing
+                var filteredSubRoutes = subRoutes.Where(routeAttributeData =>
+                {
+                    var currentDescriptor = GetControllerDescriptor(routeAttributeData);
+                    bool hasSupportForVersion = currentDescriptor.HasSupportForVersion(version);
 
+                    if (hasSupportForVersion && controllerDescriptor == null)
+                    {
+                        controllerDescriptor = currentDescriptor;
+                    }
 
+                    return hasSupportForVersion;
+                });
+
+                routeData.Values[SubRoutesKey] = filteredSubRoutes.ToArray();
+                return controllerDescriptor;
             }
 
             throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "Failed to find a controller that matches the request"));
@@ -76,7 +90,7 @@ namespace Headmaster
 
         private HttpControllerDescriptor GetControllerDescriptor(IHttpRouteData routeData)
         {
-            return ((HttpActionDescriptor[])routeData.Route.DataTokens[ActionKey]).First()?.ControllerDescriptor;
+            return ((HttpActionDescriptor[])routeData.Route.DataTokens[ActionKey]).FirstOrDefault()?.ControllerDescriptor;
         }
 
         private static T GetRouteVariable<T>(IHttpRouteData routeData, string name)
