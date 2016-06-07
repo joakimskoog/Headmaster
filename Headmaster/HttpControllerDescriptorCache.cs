@@ -12,20 +12,17 @@ namespace Headmaster
     public sealed class HttpControllerDescriptorCache
     {
         private readonly HttpConfiguration _configuration;
-        private readonly HeaderVersioningOptions _options;
         private readonly IControllerTypesResolver _controllerTypesResolver;
 
         private readonly Lazy<IDictionary<string, HttpControllerDescriptor>> _controllers;
 
         public IDictionary<string, HttpControllerDescriptor> ControllerDescriptors => _controllers.Value;
 
-        public HttpControllerDescriptorCache(HttpConfiguration configuration, HeaderVersioningOptions options, IControllerTypesResolver controllerTypesResolver)
+        public HttpControllerDescriptorCache(HttpConfiguration configuration, IControllerTypesResolver controllerTypesResolver)
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-            if (options == null) throw new ArgumentNullException(nameof(options));
             if (controllerTypesResolver == null) throw new ArgumentNullException(nameof(controllerTypesResolver));
             _configuration = configuration;
-            _options = options;
             _controllerTypesResolver = controllerTypesResolver;
             _controllers = new Lazy<IDictionary<string, HttpControllerDescriptor>>(InitialiseControllerDictionary);
         }
