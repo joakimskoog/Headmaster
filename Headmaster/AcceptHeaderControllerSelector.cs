@@ -45,10 +45,9 @@ namespace Headmaster
                 throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound, "No API version was found"));
             }
 
-            //We don't want to prepend our value to the version if it's empty, because that would mess with other checks
             if (!string.IsNullOrEmpty(version))
             {
-                version = $"{_options.RequestVersionPrepend}{version}";
+                version = _options.RequestVersionTransformer(version);
             }
 
             var subRoutes = routeData.GetSubRoutes();

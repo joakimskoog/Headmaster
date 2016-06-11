@@ -4,20 +4,19 @@ namespace Headmaster.Configuration
 {
     public class HeaderVersioningOptions
     {
+        public Func<string,string> RequestVersionTransformer { get; }
         public string MediaType { get; }
         public string MediaTypeParameter { get; }
-        public string RequestVersionPrepend { get; set; }
         public DefaultVersionResolving DefaultVersionResolving { get; set; }
 
-        public HeaderVersioningOptions(string mediaType, string mediaTypeParameter, DefaultVersionResolving defaultVersionResolving, string requestVersionPrepend = "")
+        public HeaderVersioningOptions(string mediaType, string mediaTypeParameter, DefaultVersionResolving defaultVersionResolving, Func<string,string> requestVersionTransformer = null)
         {
             if (string.IsNullOrEmpty(mediaType)) throw new ArgumentNullException(nameof(mediaType));
             if (string.IsNullOrEmpty(mediaTypeParameter)) throw new ArgumentNullException(nameof(mediaTypeParameter));
-            if(requestVersionPrepend == null) throw new ArgumentNullException(nameof(requestVersionPrepend));
             MediaType = mediaType;
             MediaTypeParameter = mediaTypeParameter;
             DefaultVersionResolving = defaultVersionResolving;
-            RequestVersionPrepend = requestVersionPrepend;
+            RequestVersionTransformer = requestVersionTransformer ?? (requestVersion => requestVersion);
         }
     }
 }
